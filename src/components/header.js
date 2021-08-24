@@ -1,42 +1,57 @@
-import * as React from "react"
-import PropTypes from "prop-types"
+import React, { useState } from "react"
 import { Link } from "gatsby"
+import { FaAlignJustify } from "react-icons/fa"
+import { StaticImage } from "gatsby-plugin-image"
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
+// import logo from "../assets/images/logo.png"
+
+import * as s from "./Header.module.css"
+
+const Header = () => {
+  const [show, setShow] = useState(false)
+
+  return (
+    <header className={s.navbar}>
+      <div className={s.navCenter}>
+        <div className={s.navHeader}>
+          <Link to="/">
+            <StaticImage
+            src="../assets/images/logo.png"
+            alt="Terrence Chan"
+            layout="constrained"
+            placeholder="blurred"
+            height={96}
+            loading="lazy"
+            />
+          </Link>
+
+          <button className={s.navBtn} onClick={() => setShow(!show)}>
+            <FaAlignJustify />
+          </button>
+        </div>
+        <div
+          className={show ? `${s.navLinks} ${s.showLinks}` : `${s.navLinks}`}
         >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
-
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-  siteTitle: ``,
+          <Link
+            to="/"
+            className={s.navLink}
+            activeClassName={s.activeLink}
+            onClick={() => setShow(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to="/projects"
+            className={s.navLink}
+            activeClassName={s.activeLink}
+            onClick={() => setShow(false)}
+          >
+            Projects
+          </Link>
+        </div>
+      </div>
+    </header>
+  )
 }
 
 export default Header
